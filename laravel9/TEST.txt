@@ -1,0 +1,2 @@
+# RUNNING
+php artisan test --testsuite=Feature --stop-on-failure
