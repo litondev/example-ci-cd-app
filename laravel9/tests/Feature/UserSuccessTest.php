@@ -20,6 +20,7 @@ class UserSuccessTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
+        # TEST STORE
         $this->json("POST","/api/user/",[
                 "name" => "store",
                 "email" => "store@gmail.com",
@@ -32,6 +33,10 @@ class UserSuccessTest extends TestCase
 
         $this->assertCount(1,User::where("name","store")->get());
     }
+
+    public function test_store_upload(){
+
+    }
     
     public function test_update(){
         $this->withoutExceptionHandling();
@@ -42,6 +47,7 @@ class UserSuccessTest extends TestCase
             "password" => \Hash::make("12345678")
         ]);
 
+        # TEST UPDATE
         $this->json("PUT","/api/user/".$user->id,[
                 "name" => "update",
                 "email" => "update@gmail.com",
@@ -53,6 +59,10 @@ class UserSuccessTest extends TestCase
             ]);
 
         $this->assertCount(1,User::where("name","update")->where("email","update@gmail.com")->get());
+    }
+
+    public function test_update_upload(){
+
     }
 
     /**
@@ -69,6 +79,7 @@ class UserSuccessTest extends TestCase
             "password" => \Hash::make("12345678")
         ]);
 
+        # TEST DELETE
         $this->json("DELETE","/api/user/".$user->id)
             ->assertStatus(200)
             ->assertExactJson([
@@ -76,6 +87,10 @@ class UserSuccessTest extends TestCase
             ]);
 
         $this->assertCount(0,User::where("name","destroy")->get());
+    }
+
+    public function test_destroy_upload(){
+
     }
 
     public function test_show(){
@@ -87,6 +102,7 @@ class UserSuccessTest extends TestCase
             "password" => \Hash::make("12345678")
         ]);
 
+        # TEST SHOW
         $this->json("GET","/api/user/".$user->id)
             ->assertStatus(200)
             ->assertJson([
@@ -95,6 +111,10 @@ class UserSuccessTest extends TestCase
                 "email" => $user->email,                
                 "photo" => "default.png",                
             ]);        
+    }
+
+    public function test_show_upload(){
+
     }
 
     public function test_index(){
@@ -108,6 +128,7 @@ class UserSuccessTest extends TestCase
             ]);
         }
 
+        // TESTING DEFAULT
         $this->json("GET","/api/user")
             ->assertStatus(200)
             ->assertJson([
@@ -116,6 +137,7 @@ class UserSuccessTest extends TestCase
                 "last_page" => 3
             ]);
         
+        # TESTING SEARCH
         $this->json("GET","/api/user?search=index29")
             ->assertStatus(200)
             ->assertJson([
@@ -123,5 +145,15 @@ class UserSuccessTest extends TestCase
                 "current_page" => 1,
                 "last_page" => 1
             ]);    
+        
+        # TESTING PAGE
+        $this->json("GET","/api/user?page=2")
+            ->assertStatus(200)
+            ->assertJson([
+                "total" => 30,
+                "current_page" => 2,
+                "last_page" => 3
+            ]);
+        
     }
 }
