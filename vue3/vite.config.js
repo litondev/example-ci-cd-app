@@ -9,6 +9,10 @@ export default  ({ mode }) => {
   process.env = {...process.env, ...loadEnv(mode, process.cwd())};
 
   return defineConfig({
+    test: {
+      globals: true,
+      environment: "jsdom",
+    },
     plugins: [
       EnvironmentPlugin('all',{prefix: 'VUE_APP_'}),
       vue()
