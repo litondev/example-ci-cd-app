@@ -27,6 +27,10 @@ jobs:
       env:
         VUE_APP_API_URL: http://localhost:8000/api
 
+    - name: Npm Install
+      working-directory: ./vue3
+      run: npm install
+      
     - name: Run Unit Testing
       working-directory: ./vue3
       run: npm run test:unit
