@@ -17,8 +17,8 @@ jobs:
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
-      working-directory: ./vue3
       with:
+        working-directory: ./vue3
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
 
