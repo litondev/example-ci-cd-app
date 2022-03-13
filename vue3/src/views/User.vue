@@ -67,6 +67,7 @@ export default {
             password : '',
             photo : ''
         })
+
         const isLoadingForm = ref(false);
         const isEditable = ref(false);
         const isShowForm = ref(false);
@@ -107,11 +108,7 @@ export default {
             isShowForm.value = true;
             form.value = {...item}
         }
-
-        const onUpdate = () => {
-
-        }
-
+        
         const onDelete = (id) => {
             $axios.delete("/user/"+id)
             .then(() =>{
@@ -122,10 +119,6 @@ export default {
         const onAdd = () => {
             isEditable.value = false;
             isShowForm.value = true;
-        }
-
-        const onStore = () => {
-
         }
 
         const onSearch = () => {
