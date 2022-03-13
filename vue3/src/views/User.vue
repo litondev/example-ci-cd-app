@@ -1,6 +1,6 @@
 <template>
     <div>
-        User
+        <h3>User</h3>
 
         <div v-if="isShowForm">
             <form @submit.prevent="onSubmit"
