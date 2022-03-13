@@ -13,25 +13,31 @@ jobs:
         php-version: '8.0'
         
     - uses: actions/checkout@v2
-    
+              
     - name: Copy .env
+      working-directory: ./laravel9
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
       
     - name: Install Dependencies
+      working-directory: ./laravel9
       run: composer install
       
     - name: Generate key
+      working-directory: ./laravel9
       run: php artisan key:generate
       
     - name: Directory Permissions
+      working-directory: ./laravel9
       run: chmod -R 777 storage bootstrap/cache
       
     - name: Create Database
+      working-directory: ./laravel9
       run: |
         mkdir -p database
         touch database/database.sqlite
         
     - name: Execute tests (Unit and Feature tests) via PHPUnit
+      working-directory: ./laravel9
       env:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
