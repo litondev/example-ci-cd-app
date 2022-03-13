@@ -1,0 +1,11 @@
+# UNIT TESTING  / COMPONENT TESTING
+npm run test:unit 
+
+# END TO END TEST 
+npm run build 
+
+# GUI MODE
+npm run test:e2e
+
+# CLI MODE(RECOMENDED)
+npm run test:e2e:ci 
