@@ -1,0 +1,36 @@
+name: Vue
+
+on:
+  push:
+    branches: [ master ]  
+
+jobs:
+  vue-e2e-test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x, 16.x]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    - name: Copy .env
+      working-directory: ./vue3
+      run: cp .env.example .env
+      env:
+        VUE_APP_API_URL: http://localhost:8000/api
+
+    - name: Build 
+      working-directory: ./vue3
+      run: npm run build
+
+    - name: Run Unit Testing
+      working-directory: ./vue3
+      run: npm run test:e2e:ci

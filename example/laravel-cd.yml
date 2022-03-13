@@ -1,0 +1,45 @@
+## ONLY USE CD FOR CHANGE SCRIPT ONLY
+
+## PROBLEM WITH CD
+## 1.) UPDATE DATABASE MANUAL
+## 2.) UPDATE ENV MANUAL 
+## 3.) UPDATE ASSET MANUAL
+
+name: Laravel
+
+on:
+  schedule:
+    # every 00.00
+    - cron: '0 0 * * *'
+  #push:
+   # branches: [ master ]  
+
+jobs:
+  cd:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+              
+    - name: Deploy Using ssh
+      uses: appleboy/ssh-action@master
+        with:
+          host:  ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key:  ${{ secrets.KEY }}
+          port: 22
+          script: |
+           echo "Change Directory"
+           cd /var/www/html/project/laravel
+
+           echo "Pull origin master"
+           git pull origin master
+
+           echo "Composer Install"
+           composer install   
+
+           echo "Clear Cache"              
+           php artisan config:clear
+
+           php artisan cache:clear
+
+           php artisan route:clear

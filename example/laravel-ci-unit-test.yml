@@ -2,12 +2,13 @@ name: Laravel
 
 on:
   schedule:
+    # every 00.00
     - cron: '0 0 * * *'
   #push:
    # branches: [ master ]  
 
 jobs:
-  laravel-tests:
+  laravel-unit-test:
     runs-on: ubuntu-latest
     steps:
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e

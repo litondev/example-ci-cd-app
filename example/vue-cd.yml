@@ -1,0 +1,43 @@
+## ONLY USE CD FOR CHANGE SCRIPT ONLY
+
+## PROBLEM WITH CD
+## 1.) UPDATE ENV MANUAL 
+## 2.) UPDATE ASSET MANUAL
+
+name: Vue
+
+on:
+  schedule:
+    # every 00.00
+    - cron: '0 0 * * *'
+  # push:
+   # branches: [ master ]  
+
+jobs:
+  cd:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+              
+    - name: Deploy Using ssh
+      uses: appleboy/ssh-action@master
+        with:
+          host:  ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key:  ${{ secrets.KEY }}
+          port: 22
+          script: |
+           echo "Change Directory"
+           cd /var/www/html/project/vue
+
+           echo "Pull origin master"
+           git pull origin master
+
+           echo "Npm Install"
+           npm install            
+
+           echo "Npm run build"
+           npm run build
+
+           echo "Copy all build folder"
+           cp /var/www/html/project/vue/dist/* /var/www/html/vue
